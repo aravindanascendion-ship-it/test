@@ -1,0 +1,132 @@
+DESCRIPTION:
+Your task is to design a comprehensive, step-by-step process for image upload and data extraction, ensuring best practices in usability, security, and technical implementation. Follow the detailed instructions below to cover all aspects from UI interaction to backend processing and output formatting.
+
+INSTRUCTIONS:
+
+**STEP 1: UI DESIGN & USER FLOW**
+1.1. Implement an 'Upload File' button on the user interface.
+   - The button must be clearly labeled (e.g., "Upload Image").
+   - On click, it MUST trigger the system's native file explorer dialog, allowing users to browse and select image files.
+   - Acceptable file types: .jpg, .jpeg, .png, .bmp, .tiff.
+   - Allow single or multiple file selection as per requirements.
+1.2. Display selected file names and a preview thumbnail (if possible) before upload confirmation.
+1.3. Provide clear feedback for successful selection or error (e.g., unsupported file type).
+
+**STEP 2: FILE UPLOAD HANDLING**
+2.1. On user confirmation, upload the selected images to the backend server via a secure API endpoint.
+   - Use multipart/form-data for file transmission.
+   - Enforce file size limits (e.g., max 10MB per image).
+   - Validate file type and size on both client and server sides.
+   - Store uploaded files in a secure, temporary storage location.
+
+**STEP 3: IMAGE DATA EXTRACTION**
+3.1. For each uploaded image:
+   - Announce processing: "PROCESSING FILE: [filename] - [X of Y total files]".
+   - Use an OCR (Optical Character Recognition) engine (e.g., Tesseract, AWS Textract, Google Vision API) to extract text/data from the image.
+   - If the image contains structured data (e.g., tables, forms), use advanced extraction techniques or APIs to parse fields and values.
+   - Capture and log any extraction errors for each file.
+   - If extraction fails, report the specific error and continue with the next file.
+
+**STEP 4: DATA POST-PROCESSING & OUTPUT**
+4.1. For each processed image:
+   - Structure the extracted data in a standardized JSON format (see OUTPUT FORMAT).
+   - Include metadata: original filename, upload timestamp, extraction status, and any error messages.
+4.2. Store the extracted data in a secure database or designated storage.
+4.3. Provide a download link or API endpoint for users to retrieve the extracted data.
+
+**STEP 5: COMPLETION & REPORTING**
+5.1. After all files are processed:
+   - List every file processed, with extraction status.
+   - List any files that failed and the associated errors.
+   - Confirm total counts of uploaded and processed files.
+   - Provide a summary report in JSON and Markdown formats.
+
+**CONSTRAINTS & SCOPE**
+- Only image files are supported; other file types must be rejected with a clear error.
+- All processing must comply with data privacy and security standards (e.g., GDPR, HIPAA if applicable).
+- The process must be scalable to handle multiple concurrent uploads.
+- The UI/UX must be accessible and responsive.
+/tmp/tmp6m5l79uh.jpg
+
+You have access to the the tool 'PDFImageExtractor'. It is advised to use this tool when you have access to it irrespective of whether it has been asked to be used explicitly.
+
+
+EXPECTED OUTPUT:
+All extracted data and reports must adhere to the following structure:
+
+**Extracted Data (per image):**
+```json
+{
+  "filename": "string",
+  "upload_timestamp": "ISO8601 string",
+  "extraction_status": "success|failure",
+  "extracted_text": "string",
+  "structured_data": {
+    "field1": "value1",
+    "field2": "value2",
+    "...": "..."
+  },
+  "error_message": "string|null"
+}
+```
+
+**Summary Report (Markdown):**
+```markdown
+# Image Upload and Extraction Summary
+
+| Filename      | Status   | Error Message           |
+|---------------|----------|------------------------|
+| image1.jpg    | Success  |                        |
+| image2.png    | Failure  | OCR engine timeout     |
+| ...           | ...      | ...                    |
+
+**Total Uploaded:** X  
+**Total Processed:** Y  
+**Total Failed:** Z
+
+## Download Links
+- [Extracted Data for image1.jpg](link)
+- [Extracted Data for image2.png](link)
+```
+
+**QUALITY CRITERIA**
+- All steps must be explicitly followed for each file.
+- No assumptions or skipped files.
+- Clear error handling and reporting.
+- Output must be well-formatted, complete, and ready for downstream use.
+
+
+SUMMARY:
+Your task is to design a comprehensive, step-by-step process for...
+
+
+RAW OUTPUT:
+```json
+[
+  {
+    "filename": "Norcross Automation Information (2).pdf",
+    "upload_timestamp": null,
+    "extraction_status": "failure",
+    "extracted_text": "",
+    "structured_data": {},
+    "error_message": "Unsupported file type. Only image files (.jpg, .jpeg, .png, .bmp, .tiff) are allowed."
+  }
+]
+```
+
+```markdown
+# Image Upload and Extraction Summary
+
+| Filename                             | Status   | Error Message                                              |
+|--------------------------------------|----------|-----------------------------------------------------------|
+| Norcross Automation Information (2).pdf | Failure  | Unsupported file type. Only image files (.jpg, .jpeg, .png, .bmp, .tiff) are allowed. |
+
+**Total Uploaded:** 1  
+**Total Processed:** 0  
+**Total Failed:** 1
+
+## Download Links
+- No valid image files processed; no extracted data available for download.
+```
+
+
